@@ -1,0 +1,32 @@
+flowchart TD
+    subgraph Data Layer: Solana High-Speed State Ingestion
+        RPC[Yellowstone gRPC / Triton Geyser] -->|Sub-millisecond Account Streaming| WS[Account Update Streamer]
+        WS -->|TickArray / OrderBook / Pool Accounts| MEM[In-Memory Lock-Free State Cache]
+        PYTH[Pyth Network Hermes Feed] -->|Pull Oracles EMA Price| MEM
+    end
+
+    subgraph Core Pricing & Math Validation Engine
+        MEM --> COMP[SolPrism Multi-Venue Quoter]
+        COMP -->|Exact Math CLMM| M1[Orca SqrtPriceX64 Calc]
+        COMP -->|LOB Bids & Asks Tree| M2[Phoenix Engine v1 Calc]
+        COMP -->|TickArray Delta Math| M3[Raydium CLMM Calc]
+        
+        M1 --> AGG[Divergence & Best Execution Matrix]
+        M2 --> AGG
+        M3 --> AGG
+    end
+
+    subgraph Security, Verification & On-Chain Execution
+        AGG --> DEC{Price Discrepancy > Threshold?}
+        DEC -->|No: Standard Route| BPF[SolPrism On-Chain Verification Program]
+        DEC -->|Yes: Arbitrage Alert| SEC[Risk Mitigation & Circuit Breaker]
+        
+        BPF -->|Cross-Program Invocation| JUP[Execute Swaps / Atomic Arb]
+        SEC -->|Halt Route & Emit Warning| NOTIF
+    end
+
+    subgraph Enterprise Telemetry & Notification Loop
+        NOTIF[Enterprise Webhook Dispatcher]
+        NOTIF -->|JSON POST| DISCORD[Discord Operations Webhook]
+        NOTIF -->|Critical Alert Event| RESEND[Resend Enterprise Email Service]
+    end
