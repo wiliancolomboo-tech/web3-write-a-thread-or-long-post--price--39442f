@@ -1,0 +1,6 @@
+3/3 🛠️ Open-source, turnkey, enterprise-grade:
+✅ Zero-drift Decimal tick math
+✅ SHA-256 audited execution proofs
+✅ Instant Slack/Discord & @resend webhook alerting
+
+Check out the full open-source repo & whitepaper on GitHub! 🚀 #Solana #DeFi #Web3

@@ -1,0 +1,7 @@
+7/9 To solve this, we engineered SolCompare:
+A production-grade, open-source verification framework featuring:
+✅ Sub-slot multi-venue price ingestion (Orca, Raydium, Phoenix)
+✅ On-chain Anchor validator enforcing invariant bounds
+✅ Automated Slack/Discord alerting & Prometheus metrics exporter
+
+Zero MEV degradation.

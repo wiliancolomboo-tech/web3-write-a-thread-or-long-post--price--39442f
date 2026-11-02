@@ -1,0 +1,1 @@
+6/7 🛡️ Paired with `sol_price_verifier`, our on-chain Anchor program cryptographically asserts cross-venue price divergence envelopes atomically before your swap executes. Say goodbye to 0x1771 slippage reverts!

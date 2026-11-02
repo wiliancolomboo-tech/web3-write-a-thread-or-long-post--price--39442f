@@ -1,0 +1,7 @@
+1/4 Most traders think DEX price comparison on Solana is just "check Jupiter vs Raydium".
+
+Wrong. 
+
+In a 400ms slot world, centralized price polling leaves 25-80 bps on the table every block due to stale routing and unverified slippage. 
+
+Here is how we fixed it: 🧵👇

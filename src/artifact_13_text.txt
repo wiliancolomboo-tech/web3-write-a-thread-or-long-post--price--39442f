@@ -1,0 +1,6 @@
+2/4 We built Solana Nexus-Quote (SNQ):
+⚡️ Parallelized CLMM depth + Jup V6 quote aggregation (<250ms)
+🛡️ On-chain Anchor program bounded by @PythNetwork confidence bands
+📬 Instant sub-second webhooks + @resend email alerts when spreads breach 25 BPS.
+
+Zero stale quotes. Pure deterministic execution.

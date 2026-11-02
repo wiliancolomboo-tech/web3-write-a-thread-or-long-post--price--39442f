@@ -1,0 +1,4 @@
+8/9 Here is the exact data topology:
+Our worker streams L2 tick updates, calculates Basis Point Delta (Δ_bps = |P_best - P_target| / P_best * 10,000), and records verification logs directly to the Solana ledger via Anchor CPI. 
+
+If spread exceeds your predefined threshold, atomic execution rolls back.

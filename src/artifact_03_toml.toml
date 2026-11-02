@@ -1,12 +1,12 @@
 [package]
-name = "solprism-guard"
+name = "solana-price-comparator"
 version = "0.1.0"
-description = "SolPrism On-Chain Comparative Price Verification Engine"
+description = "Deterministic On-Chain Price Comparison and Oracle Guard Program"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "lib"]
-name = "solprism_guard"
+name = "solana_price_comparator"
 
 [features]
 no-entrypoint = []
@@ -17,5 +17,4 @@ default = []
 
 [dependencies]
 anchor-lang = { version = "0.30.1", features = ["init-if-needed"] }
-anchor-spl = { version = "0.30.1" }
-solana-program = "1.18.26"
+pyth-sdk-solana = "0.10.3"

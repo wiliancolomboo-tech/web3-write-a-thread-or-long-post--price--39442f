@@ -1,0 +1,8 @@
++------------------+------------------------------+----------------------------------+
+| Venue            | Invariant Model              | Execution Characteristic         |
++------------------+------------------------------+----------------------------------+
+| Raydium AMM v4   | x * y = k (CPMM)             | Infinite range, high slippage    |
+| Orca Whirlpools  | Uniswap v3 style Tick Arrays | Discrete ticks, concentrated L   |
+| Meteora DLMM     | Discrete Bin Steps (P_i)     | Zero slippage intra-bin trading  |
+| Phoenix LOB      | Exact Limit Order Book       | Deterministic bid/ask queues     |
++------------------+------------------------------+----------------------------------+

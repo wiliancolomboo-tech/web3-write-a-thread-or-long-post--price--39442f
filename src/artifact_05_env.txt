@@ -1,0 +1,8 @@
+SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+JUPITER_API_URL=https://quote-api.jup.ag/v6
+PYTH_HERMES_URL=https://hermes.pyth.network
+DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+RESEND_API_KEY=re_123456789
+ALERT_EMAIL=ops@hedgefund.com
+ALERT_THRESHOLD_BPS=15

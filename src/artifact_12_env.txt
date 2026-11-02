@@ -1,0 +1,6 @@
+SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+PROGRAM_ID=APEXq11111111111111111111111111111111111111
+DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+RESEND_API_KEY=re_123456789abcdef
+ALERT_EMAIL_RECIPIENT=treasury-alerts@enterprise.org

@@ -1,0 +1,25 @@
+sequenceDiagram
+    autonumber
+    actor Treasury as Institutional Treasury / Trader
+    participant Agent as Aegis Price Aggregator Worker
+    participant Pyth as Pyth Network (Pull Feed)
+    participant Guard as price_comparator_guard (Solana)
+    participant DEX as Best Executing DEX (Orca/Raydium)
+    participant Webhook as Slack/Discord & Resend API
+
+    Treasury->>Agent: Request Execution Comparison (Token In -> Token Out, Amount)
+    Agent->>DEX: Fetch Liquidity Depths & Route Quotes
+    Agent->>Pyth: Fetch Low-Latency Price Account & Signature
+    Agent->>Agent: Compute Net Effective Price (Net of CUs, Dynamic Fees, Jito Tip)
+    
+    alt Price Spread / Opportunity >= Threshold
+        Agent->>Webhook: Post Spread Analysis & Notification Event
+    end
+
+    Agent->>Guard: Submit `execute_verified_swap` (Min Price, Max Deviation Bps, Pyth Feed)
+    Guard->>Guard: Verify Pyth Price Staleness (< 60s) & Confidence Interval
+    Guard->>Guard: Enforce: |DexQuote - PythPrice| <= MaxDeviationAllowed
+    Guard->>DEX: CPI Call to Swap Tokens
+    DEX-->>Guard: Token Balance Delta
+    Guard->>Guard: Assert Realized Output >= Min Expected Output
+    Guard-->>Treasury: Transaction Finalized (Slot Confirmed)

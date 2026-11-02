@@ -1,0 +1,42 @@
+flowchart TD
+    subgraph Data_Sources ["External Price Oracles & Venues"]
+        P1["Pyth Network V2<br/>(Wormhole/Pythnet Pull)"]
+        S1["Switchboard On-Demand<br/>(SGX Attested TEE)"]
+        O1["Orca Whirlpools<br/>(CLMM Tick Arrays Q64.64)"]
+        R1["Raydium Concentrated<br/>(CLMM Pools SqrtPriceX64)"]
+        J1["Jupiter v6 Aggregator<br/>(Optimal Multi-Hop Quotes)"]
+    end
+
+    subgraph OffChain_Agent ["Enterprise Node Engine & Monitoring Agent"]
+        Collector["Price Ingestion Orchestrator<br/>(Rust/TypeScript Async)"]
+        Analyzer["Matrix Matrix & Divergence Engine<br/>(Basis Point Spread / Stale Slot Checks)"]
+        Notifier["Alert Dispatcher<br/>(Slack / Discord Webhook & Resend SMTP)"]
+    end
+
+    subgraph Solana_Runtime ["Solana L1 Mainnet / Devnet"]
+        Contract["solana_price_matrix Program<br/>(Anchor v0.30.1)"]
+        StateAccount["PriceMatrixConfig<br/>(Authority, Max Divergence, Quorum)"]
+        RecordAccount["PriceDiscrepancyLog<br/>(PDA: [b'comparison_log', asset_mint])"]
+    end
+
+    subgraph Consumer ["Enterprise Protocols & Treasury"]
+        Liquidator["Lending Liquidator Daemon"]
+        Treasury["Automated Treasury Rebalancer"]
+    end
+
+    %% Connections
+    P1 -->|Account Deserialization| Collector
+    S1 -->|Account Deserialization| Collector
+    O1 -->|RPC Fetch Whirlpool State| Collector
+    R1 -->|RPC Fetch Pool State| Collector
+    J1 -->|REST API Quotes| Collector
+
+    Collector --> Analyzer
+    Analyzer -->|Divergence > Threshold Alert| Notifier
+    Analyzer -->|Sign & Send Verification Tx| Contract
+
+    Contract -->|Store Historic Proof| RecordAccount
+    Contract -->|Read Parameters| StateAccount
+    
+    Consumer -->|CPI Query: verify_price_consistency| Contract
+    Contract -->|Ok / Err: PriceDiscrepancyExceeded| Consumer

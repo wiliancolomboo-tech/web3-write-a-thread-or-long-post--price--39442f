@@ -1,0 +1,5 @@
+2/3 ⚡ Constant Product (x*y=k) vs Concentrated Liquidity:
+
+On CPMM, a 250 SOL swap experiences non-linear price degradation. Orca CLMM absorbs the trade with <3 bps slippage within active ticks—until it crosses tick arrays.
+
+We built `SpectraQuote`: a zero-copy TypeScript engine that decodes on-chain tick states & routes optimal execution in <10ms.

@@ -1,0 +1,5 @@
+2/8
+Aggregators like Jupiter solve an NP-hard problem: split routing.
+Routing 100 SOL across @Orca_so Whirlpools, @RaydiumProtocol CLMM, and @PhoenixTrade prevents crossing tick thresholds, dramatically minimizing price impact.
+
+So why wouldn't you ALWAYS use multi-hop routes?

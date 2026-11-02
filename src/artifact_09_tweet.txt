@@ -1,0 +1,5 @@
+1/3 🧵 Most traders lose 0.20%-1.50% on every Solana trade without realizing it. 
+
+Why? Because liquidity on @solana isn't a single pool—it's fragmented across Raydium CPMM, Orca Whirlpools (CLMM), Phoenix Orderbooks, & dynamic Pyth feeds.
+
+Here is the exact math behind real-time DEX price comparison 👇

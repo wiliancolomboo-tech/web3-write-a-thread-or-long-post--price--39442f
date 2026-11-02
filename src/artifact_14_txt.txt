@@ -1,0 +1,9 @@
+SBEE features:
+✅ Real-time multi-venue price comparison (Jupiter, Raydium, Orca)
+✅ Atomic Anchor guard enforcing slippage & divergence bounds
+✅ Turnkey Docker container with Slack/Discord webhook alerts
+
+Check out the code & run the CLI in 60s:
+https://github.com/sponsor/solana-price-comparison-engine
+
+cc @solana @JupiterExchange @RaydiumProtocol 🚀

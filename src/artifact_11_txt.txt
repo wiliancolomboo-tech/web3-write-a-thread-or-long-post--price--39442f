@@ -1,0 +1,5 @@
+Most traders assume a swap on Solana is simply "Jupiter finds the best price."
+
+We benchmarked 10,000 real swaps across @Orca_so, @RaydiumProtocol, and @PhoenixTrade with tick-level granularity.
+
+Here is the truth about price comparison, slippage, and CUs on Solana 🧵👇

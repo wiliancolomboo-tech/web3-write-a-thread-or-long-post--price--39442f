@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  solprice-comparator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+      - PYTH_HERMES_URL=https://hermes.pyth.network
+      - JUPITER_QUOTE_URL=https://quote-api.jup.ag/v6/quote
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ALERT_EMAIL=${ALERT_EMAIL}
+    ports:
+      - "8080:8080"

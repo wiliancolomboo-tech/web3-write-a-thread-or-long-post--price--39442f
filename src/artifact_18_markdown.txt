@@ -1,0 +1,19 @@
+# Demystifying Solana DEX Execution: Jupiter vs. Orca Whirlpools vs. Raydium CLMM vs. Meteora DLMM
+
+If you are trading institutional size on Solana, assuming that "all DEX aggregators yield the same price" is costing you thousands of dollars per transaction.
+
+Solana settles blocks in 400 milliseconds, but behind the speed lies a deeply fragmented liquidity landscape. We benchmarked live quotes across four core liquidity venues under identical block contexts:
+1. Jupiter v6 (Smart Path Aggregator)
+2. Orca Whirlpools (Concentrated Liquidity AMM)
+3. Raydium CLMM (Tick-array concentrated order curves)
+4. Meteora DLMM (Dynamic Bin Market Makers)
+
+### Key Findings:
+- **Low Size (< 5 SOL):** Direct Concentrated Pools (Orca Whirlpools) often beat multi-hop aggregation due to zero intermediary fee compounding and predictable tick liquidity.
+- **Mid to High Size (100 - 1,000 SOL):** Jupiter v6 consistently produces superior output by splitting routes across Orca, Raydium, and Meteora across multiple sub-legs. However, slippage sensitivity increases non-linearly.
+- **Dynamic Fee Volatility:** Meteora's dynamic fee bins surge during heightened volatility, shifting the optimal venue toward fixed-tier concentrated tick pools.
+- **Oracle Verification:** Cross-referencing spot quotes with Pyth Network pull-oracles in under 10ms prevents toxic slippage and eliminates front-running exposure.
+
+We open-sourced the complete Solana Comparative Execution Engine (CEE)—a microsecond-speed comparison engine, CLI, and real-time enterprise webhook monitor.
+
+Repo & code below 👇

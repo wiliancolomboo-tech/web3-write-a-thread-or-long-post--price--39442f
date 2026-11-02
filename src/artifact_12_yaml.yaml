@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  sol-price-lens:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL:-https://api.mainnet-beta.solana.com}
+      - SOLANA_PRIVATE_KEY=${SOLANA_PRIVATE_KEY}
+      - PROGRAM_ID=Lens111111111111111111111111111111111111111
+      - DEVIATION_THRESHOLD_BPS=50
+      - POLL_INTERVAL_MS=3000
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ADMIN_ALERT_EMAIL=${ADMIN_ALERT_EMAIL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"

@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  solcompare-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solcompare-agent
+    restart: unless-stopped
+    environment:
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}
+      - ALERT_SPREAD_BPS=15
+      - NODE_ENV=production
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

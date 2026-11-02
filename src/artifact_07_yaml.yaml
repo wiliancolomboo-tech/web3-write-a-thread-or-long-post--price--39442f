@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  solana-price-sentinel:
+    build: .
+    restart: always
+    environment:
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+      - JUPITER_API_URL=https://quote-api.jup.ag/v6
+      - MAX_SPREAD_BPS=30
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "5"

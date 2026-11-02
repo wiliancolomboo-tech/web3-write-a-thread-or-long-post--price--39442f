@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  solcompare-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solcompare-sentinel
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+      - ENTERPRISE_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+      - POLLING_INTERVAL_MS=1000
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -1,0 +1,27 @@
+1/4 🧵 Why do you lose up to 108 bps swapping on Solana without real-time price comparison?
+
+It comes down to invariant architecture:
+• CPMM (x · y = k) vs.
+• Concentrated Liquidity (Orca Whirlpools) vs.
+• Pure On-Chain CLOBs (Phoenix).
+
+Here is the technical breakdown 👇
+
+2/4 📊 We benchmarked a 100 SOL -> USDC execution across venues:
+• Phoenix CLOB: $15,110.97 received (2 bps fee)
+• Orca CLMM: $15,062.88 received (tight tick band)
+• Raydium CPMM: $14,947.53 received (severe curve slippage)
+
+A single-venue routing to CPMM forfeited $163.44 on ONE trade.
+
+3/4 🛡️ But off-chain quoting isn't enough. In 400ms slots, quotes go stale before landing.
+
+We built DexLens:
+⚡ Sub-millisecond tick indexing
+🔍 Deterministic cross-venue spread calculations
+🔒 On-chain Anchor guard preventing stale slot execution & MEV sandwiching.
+
+4/4 🚀 Production-ready Anchor contract, TypeScript CLI agent, Slack alert pipelines, and Docker orchestration are completely open-source.
+
+Code & Full Technical Architecture: https://github.com/dexlens/dexlens-core
+@solana @SuperteamDAO #Solana #DeFi #Rust

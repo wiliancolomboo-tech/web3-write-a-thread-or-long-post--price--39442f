@@ -1,0 +1,10 @@
+To bring institutional MiFID II-grade best-execution audits to Solana, we are open-sourcing SolPrice-Verify:
+
+✅ On-chain Anchor route verification
+✅ Real-time multi-venue price comparison
+✅ Automated alerting via Discord & @resend
+
+Run it via 1-click Docker:
+docker compose up -d
+
+Built for the Solana ecosystem. Feedback welcome! ⚡️🦀

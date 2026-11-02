@@ -1,0 +1,8 @@
+{
+  "status": "HEALTHY",
+  "uptimeSeconds": 86420,
+  "lastEvaluatedSlot": 298104112,
+  "venuesMonitored": ["Raydium CLMM", "Orca Whirlpool", "Phoenix", "Meteora DLMM"],
+  "pythOracleConnected": true,
+  "averageDivergenceBps": 4.12
+}

@@ -1,0 +1,8 @@
+3/8
+Enter the COMPUTE UNIT penalty.
+• Direct Phoenix / Orca Swap: ~55,000 - 85,000 CUs
+• Multi-Split Aggregator Swap: ~400,000 - 950,000 CUs
+
+In Solana's fee market:
+Priority Fee Density = Lamports / CU.
+A 900k CU tx requires 10x the lamports of a direct route to achieve the same inclusion priority!

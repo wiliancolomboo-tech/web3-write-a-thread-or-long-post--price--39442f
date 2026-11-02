@@ -1,0 +1,14 @@
+# Solana Network Configuration
+SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+HERMES_ENDPOINT=https://hermes.pyth.network
+
+# Price Deviation Parameters
+MAX_DEVIATION_BPS=100
+POLL_INTERVAL_MS=3000
+PORT=8080
+
+# Enterprise Alert Sinks
+DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+RESEND_API_KEY=re_123456789_abcdefg
+ALERT_EMAIL_RECIPIENT=treasury-ops@enterprise.org

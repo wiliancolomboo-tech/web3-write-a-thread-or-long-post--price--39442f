@@ -1,0 +1,5 @@
+---
+
+# 5. Comprehensive Test Suite & QA Matrix
+
+Below is the complete TypeScript test suite (`tests/spire-engine.spec.ts`) executing deterministic mathematical verification, edge-case bounds checking, invariant validation, and simulated mock alerting.

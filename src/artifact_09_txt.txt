@@ -1,0 +1,8 @@
++---------------------------------------------------------------------------------------------------+
+| VENUE TYPE            | ALGORITHM                     | BEST FOR              | WEAKNESS          |
++-----------------------+-------------------------------+-----------------------+-------------------+
+| Raydium V4 / CPMM     | x * y = k                     | Long-tail assets      | High Slippage     |
+| Orca Whirlpools       | Concentrated Ticks (CLMM)     | High-liquidity pairs  | Tick Crossing CUs |
+| Phoenix               | Pure L3 On-Chain Order Book   | Large Market Orders   | Active Maker Reqs |
+| Jupiter               | Split-Hop Graph Routing       | Any Size Swaps        | Higher CU Burden  |
++-----------------------+-------------------------------+-----------------------+-------------------+

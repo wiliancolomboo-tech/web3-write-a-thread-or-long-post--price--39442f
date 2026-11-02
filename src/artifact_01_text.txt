@@ -1,0 +1,5 @@
+==================================================================================================
+SOLANA LIQUIDITY BENCHMARK REPORT: VENUE-BY-VENUE PRICE DISCOVERY & REALIZED EXECUTION
+Author: Principal Solana DeFi Architect & Research Fellow
+Date: Q2 2025 | Target Assets: SOL/USDC, JUP/USDC, BONK/SOL
+==================================================================================================

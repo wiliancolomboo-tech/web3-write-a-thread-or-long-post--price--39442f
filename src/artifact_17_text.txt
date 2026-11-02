@@ -1,0 +1,6 @@
+1/8
+Why does the "best price" on Solana sometimes LOSE you money? 🧵
+
+If you are evaluating swaps purely by comparing DEX quotes vs @JupiterExchange nominal outputs without factoring in Compute Units (CUs) and fee density, you're leaving alpha on the table.
+
+Here is the engineering breakdown 👇

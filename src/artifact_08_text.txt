@@ -1,0 +1,20 @@
+1/4 🚨 What actually happens when you swap 1,000 SOL across Raydium, Orca, Phoenix, and Jupiter?
+
+We built an open-source, on-chain verifiable price comparison engine to benchmark real execution slippage, CU consumption, and mathematical models on @solana. 🧵👇
+
+2/4 The Microstructure Breakdown:
+• Raydium (CPMM): Continuous x*y=k math, but institutional size pays 33+ bps slippage.
+• Orca (CLMM): 5-10x capital efficiency inside tick ranges, but tick-walking hikes CU costs.
+• Phoenix (CLOB): Discrete L2 orderbook fills with zero curve slippage inside spread.
+
+3/4 The Data (100 SOL swap benchmark):
+🥇 Phoenix CLOB: $14,541.20 | ~28k CUs
+🥈 Jupiter v6: $14,540.50 | ~140k CUs
+🥉 Orca CLMM: $14,539.80 | ~62k CUs
+⚠️ Raydium CPMM: $14,502.10 (Lost $39.10 to slippage)
+
+4/4 We open-sourced the complete engine, Anchor verification smart contract, and real-time enterprise webhook alerting client. 
+
+Full code & benchmark test suite: https://github.com/spce-protocol/solana-price-comparison
+
+Built for the @solana ecosystem 🚀

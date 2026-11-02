@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  solana-price-comparison:
+    build: .
+    restart: unless-stopped
+    environment:
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+      - ENTERPRISE_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

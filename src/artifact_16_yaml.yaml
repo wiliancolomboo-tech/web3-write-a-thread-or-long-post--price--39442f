@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  solcompare-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solcompare_daemon
+    restart: unless-stopped
+    environment:
+      - RPC_ENDPOINT=https://api.mainnet-beta.solana.com
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ALERT_EMAIL_RECIPIENT=${ALERT_EMAIL_RECIPIENT}
+      - BASE_MINT=So11111111111111111111111111111111111111112
+      - QUOTE_MINT=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+      - INTERVAL_MS=3000
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"

@@ -1,0 +1,5 @@
+3/9 What happens when you execute a $250,000 SOL/USDC swap?
+
+• Raydium CPMM: ~124 bps price impact. Reserves are evenly spread across infinity ($0 to $∞). Capital efficiency: 1x.
+• Orca Whirlpool: ~6 bps price impact. 90% of liquidity is clustered within ±1.5% of the current tick. Capital efficiency: >500x.
+• Phoenix: 3 bps price impact until the book's resting depth is breached, then a step function to the next limit ladder level.

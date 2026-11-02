@@ -1,0 +1,7 @@
+8/8
+Special thanks to the teams driving Solana's market efficiency: @JupiterExchange @Orca_so @RaydiumProtocol @PhoenixTrade.
+
+Read the complete engineering breakdown & deploy the engine today:
+👉 [Link to full long-form report]
+
+#Solana #DeFi #Rust #Web3Dev

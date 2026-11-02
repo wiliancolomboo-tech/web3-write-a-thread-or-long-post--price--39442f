@@ -1,0 +1,7 @@
+6/9 Taker Fee Realities on Solana:
+
+• Orca Whirlpools: Dynamic fee tiers (1 bps, 2 bps, 4 bps, 16 bps, 100 bps) tuned to tick volatility.
+• Raydium CPMM: Fixed 25 bps protocol fee (non-optimal for low-volatility stable pairs).
+• Phoenix: Ultra-lean taker fee (~1-2 bps) with no liquidity provider divergence loss (no impermanent loss).
+
+For high-volume pairs, Phoenix and Orca 1-4 bps tiers dominate effective pricing.

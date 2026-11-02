@@ -1,0 +1,6 @@
+3/3 🛡️ We built & open-sourced SolPrice-Parity:
+✅ Real-time multi-venue monitoring (Jupiter V6, Pyth, Orca)
+✅ Anchor on-chain price deviation guard program
+✅ Sub-second Discord/Slack parity divergence alerts
+
+Full code & technical post: https://github.com/solana-bounty/solprice-parity @solana #Solana #DeFi

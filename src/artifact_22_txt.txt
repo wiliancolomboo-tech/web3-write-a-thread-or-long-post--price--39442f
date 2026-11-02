@@ -1,0 +1,6 @@
+5/9 Why not just use Jupiter for everything?
+
+Jupiter does split-routing:
+E.g., 60% via Orca Whirlpool, 30% via Phoenix CLOB, 10% via Raydium CLMM. 
+
+However, route computation introduces serialization overhead (~40-80ms). For HFT, proprietary arbitrage, or institutional liquidation engines, direct on-chain PDA indexing beats aggregator routing latency every time.

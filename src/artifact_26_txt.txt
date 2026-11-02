@@ -1,0 +1,7 @@
+9/9 Best execution is no longer subjective—it is mathematically verifiable on-chain.
+
+Full Anchor smart contract, Node.js monitoring daemon, and Docker deployment ready for testing:
+🔗 Repo: https://github.com/solana-developers/solcompare-core
+Built for the Solana ecosystem. 🚀
+
+Tagging @solana @SuperteamDAO @JupiterExchange @orca_so @RaydiumProtocol @PhoenixTrade

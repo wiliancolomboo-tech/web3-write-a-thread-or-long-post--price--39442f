@@ -1,0 +1,45 @@
+🧵 1/5
+Why does a 100 $SOL swap yield different returns on Jupiter, Orca, Raydium, and Phoenix? 
+
+It’s not just AMM math. It’s slot latency, fee tiers, and CLMM tick distribution.
+
+Here is the deep-dive technical price comparison breakdown for @solana 👇
+
+---
+
+🧵 2/5
+Let’s examine the 3 pillars of Solana execution:
+
+1️⃣ CLOBs (Phoenix): Instant matching, 0 curve slippage, but bounded by orderbook depth.
+2️⃣ CLMMs (Orca/Raydium): Concentrated capital efficiency, but steep price impact if liquidity ticks are thin.
+3️⃣ Aggregators (Jupiter V6): Multi-hop graph routing that splits routes across multiple pools.
+
+---
+
+🧵 3/5
+The Secret: "Effective Net Execution Price" 
+
+Most naive traders only check spot quotes. But real alpha accounts for:
+P_realized = (Token_out / Token_in) - CU_priority_fees - MEV_slippage
+
+On a $50,000 swap, routing through Phoenix vs. a standard CPMM can save up to 42 bps ($210) pure profit.
+
+---
+
+🧵 4/5
+To solve this systematically, we built DEX-Guard:
+🛡️ An Anchor on-chain program that halts swaps if cross-venue price deviation exceeds 300 bps.
+⚡ A TypeScript engine streaming continuous price comparisons to Discord & @resend.
+📊 Deterministic slippage and MEV protection.
+
+Open source & turnkey!
+
+---
+
+🧵 5/5
+Solana’s 400ms slots demand institutional-grade execution verification. 
+
+Check out the full open-source implementation, test suite, and Docker runner:
+github.com/solana-bounty/dex-price-guard
+
+Built for the @solana ecosystem bounty. Feedback and PRs welcome! 🚀

@@ -1,0 +1,6 @@
+2/3 ⚡ The Breakdown:
+• Slot Time: Solana 400ms vs. Ethereum 12s.
+• Oracle Lag: @PythNetwork continuous slot-level pulls vs. push-oracle threshold heartbeats.
+• Total Cost Basis on $10k swap: ~$2.00 on Solana vs. $25–$68 on EVM (Gas + Sandwich MEV).
+
+Nominal price ≠ Realized execution price.

@@ -1,0 +1,1 @@
+docker compose logs -f solana-price-sentinel

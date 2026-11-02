@@ -1,0 +1,6 @@
+3/4 Open-source, production-ready, and fully containerized with Docker & Anchor test matrices.
+
+Run it locally or plug it into your institutional desk right now:
+github.com/solana-nexus/price-comparator
+
+Built for the speed of @solana. 🚀 Let us know what you think @SuperteamDAO !

@@ -1,0 +1,4 @@
+5/8
+📊 The Empirical Findings:
+• For trades < 5 SOL ($~700): Single-hop direct execution BEATS aggregators on net returns after gas fees.
+• For trades > 50 SOL: Jupiter's multi-venue splitting dominates, generating up to +42 bps in net yield over isolated pools.

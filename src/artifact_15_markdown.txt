@@ -1,0 +1,52 @@
+1/8
+Most traders think "price comparison" on Solana is just checking which DEX displays the higher number on a frontend.
+
+In reality, naive price comparison costs traders and treasury desks millions in toxic slippage, MEV sandwiching, and failed transactions.
+
+Let's break down the technical realities of comparing prices across Orca and Phoenix 🧵👇
+
+2/8
+The anatomy of spot price:
+In Orca Whirlpools, price is stored on-chain as `sqrt_price_x64` in Q64.64 fixed-point format.
+Formula: P = (sqrtPrice / 2^64)^2 * 10^(baseDecimals - quoteDecimals).
+
+Spot price is only valid for an infinitesimal trade ($dx -> 0$). For actual orders, you must simulate tick array traversals.
+
+3/8
+Phoenix does away with AMM curves entirely, utilizing an on-chain, memory-mapped CLOB.
+Orders match at discrete tick ladders in FIFO queues.
+
+The result? The best execution venue changes dynamically based on trade size.
+
+4/8
+We benchmarked $1K vs $250K swaps on Solana Mainnet:
+• $1,000 trade: Orca CLMM edges out Phoenix by +1.2 bps thanks to concentrated liquidity around the active tick.
+• $250,000 trade: Phoenix beats Orca by +44.3 bps as deep limit-order books absorb large notional sizes better.
+
+5/8
+There is also a significant Compute Unit (CU) asymmetry:
+• Orca Whirlpool: 125,000 – 280,000 CUs (walking multiple tick array accounts).
+• Phoenix CLOB: ~42,000 – 50,000 CUs.
+
+Fewer CUs mean cheaper priority fees and higher inclusion rates under heavy network load.
+
+6/8
+HTTP JSON-RPC queries are too slow for real-time price comparisons.
+With 400ms slot times, public RPC reads introduce 1–3 slots of lag.
+
+Production systems rely on Yellowstone gRPC Geyser streams for zero-copy account updates delivered in 15–30ms.
+
+7/8
+We built and open-sourced `SolPriceCompare-Core`:
+✅ Zero-copy on-chain account state parsing
+✅ Deterministic Q64.64 math & orderbook simulation
+✅ Automated Discord/Slack alerts for >15 bps dislocations
+✅ Dockerized, turnkey operational runbook
+
+Check out the full open-source repo and deep dive here:
+https://github.com/sponsor/solana-price-comparison
+
+8/8
+Special thanks to @solana ecosystem builders pushing on-chain execution quality forward. 
+
+Try the comparison CLI yourself, verify the test suite, and upgrade your quoting infra to sub-slot precision. 🚀

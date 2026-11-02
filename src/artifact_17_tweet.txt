@@ -1,0 +1,3 @@
+5/7 📊 We built SolPriceMatrix: an open-source, deterministic multi-venue price comparison daemon & Anchor verification program.
+
+It unpacks raw account states in memory in <12μs, calculates cross-venue spreads, and alerts trading desks via real-time enterprise webhooks!

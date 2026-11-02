@@ -1,0 +1,14 @@
+[Transaction Size: $100,000 USD (Input: ~539.08 SOL @ $185.50 Benchmark)]
+-----------------------------------------------------------------------------------------
+Metric                   Orca Whirlpools       Raydium CLMM          Phoenix CLOB
+-----------------------------------------------------------------------------------------
+Quoted Price (Spot)      $185.500              $185.500              $185.500
+Gross Output (USDC)      $99,842.10            $99,760.30            $99,885.20
+Effective Execution Rate $185.207              $185.055              $185.287
+Slippage & Impact        -15.8 bps             -24.0 bps             -11.5 bps
+Base LP Fee              -5.0 bps (0.05% tier) -4.0 bps (0.04% tier) -2.0 bps (Taker fee)
+Compute Units Used       62,410 CUs            88,140 CUs            24,115 CUs
+Priority Fee Req. (P90)  0.00045 SOL           0.00065 SOL           0.00012 SOL
+Net Dollar Realization   $99,758.60            $99,639.70            $99,862.90
+-----------------------------------------------------------------------------------------
+Relative Performance     2nd Place (+11.9 bps) 3rd Place (Baseline)  1st Place (+22.4 bps)

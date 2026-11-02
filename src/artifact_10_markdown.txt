@@ -1,0 +1,51 @@
+# Deep Dive: Anatomy of Solana Price Comparison & Execution Architecture
+
+Liquidity on Solana is fragmented across distinct mathematical paradigms: Constant Product Market Makers (Raydium CPMM), Concentrated Liquidity Pools (Orca Whirlpools, Raydium CLMM), Discretized Liquidity AMMs (Meteora DLMM), and Central Limit Order Books (Phoenix, OpenBook V2).
+
+For programmatic traders, treasuries, and DeFi developers, identifying true executable price efficiency demands looking beyond nominal quotes. Here is the architectural breakdown of how prices are formulated, where routing diverges, and how to verify execution deterministically.
+
+---
+
+### 1. AMM Curve Mechanics Compared
+
+#### A. Constant Product AMM (CPMM)
+- **Invariant**: $x \cdot y = k$
+- **Behavior**: Liquidity is uniformly distributed across price zero to infinity.
+- **Slippage**: Proportional to trade size relative to pool depth:
+  $$\text{Slippage} \approx \frac{\Delta x}{x}$$
+- **Drawback**: Extremely low capital efficiency; for high-volume pairs (SOL/USDC), CPMM creates deep slippage unless pool reserves are in the tens of millions.
+
+#### B. Concentrated Liquidity AMM (CLMM - Orca Whirlpools / Raydium CLMM)
+- **Invariant**: $(x + L/\sqrt{p_b})(y + L\sqrt{p_a}) = L^2$
+- **Behavior**: Liquidity providers concentrate assets within specific price ticks $[p_a, p_b]$.
+- **Execution Effect**: When a swap executes within a tick, slippage approaches zero. However, when trade volume breaches active tick boundaries, slippage shifts abruptly as liquidity falls off a cliff.
+
+#### C. Discretized Liquidity Bin AMM (Meteora DLMM)
+- **Invariant**: Distinct price bins with constant sum:
+  $$P \cdot X + Y = L$$
+- **Behavior**: Zero slippage trading inside individual bins. Dynamic volatility-adjusted fees automatically expand during heavy market swings to protect LPs while preserving tight spreads in calm markets.
+
+---
+
+### 2. The Invisible Loss: Transaction Fees vs. Price Delta
+
+A common failure mode in multi-venue routing is ignoring **Solana transaction resource costs**:
+1. **Base Signature Fee**: Fixed at 5,000 lamports per signature.
+2. **Compute Unit (CU) Limit & Priority Fees**: CLMM and multi-hop routes demand significantly more compute units:
+   - Simple CPMM Swap: ~35,000 to 50,000 CUs
+   - Concentrated Tick Traversal: ~90,000 to 140,000 CUs
+   - Multi-Hop Routed Swap: ~250,000 to 400,000 CUs
+3. **Associated Token Account (ATA) Allocation**: If an intermediate hop requires opening an ATA, rent-exemption consumes ~0.002039 SOL (~$0.30 - $0.50).
+
+**Mathematical Net Realized Price**:
+$$\text{Net Price} = \frac{\text{Gross Output} - (\text{Priority Microlamports} \times \text{CU Consumed} \times 10^{-6}) - \text{Rent}}{\text{Input Amount}}$$
+
+When trading small-to-medium ticket sizes ($10 to $200), a venue quoting a 5 bps better nominal price can produce a **negative net yield** if it consumes an extra 180,000 CUs at 50,000 micro-lamports per CU.
+
+---
+
+### 3. Verification & Gating: The Zero-Trust Pattern
+
+To protect against toxic MEV frontrunning and sudden liquidity withdrawal during quote-to-tx latency windows, execution must be bound to an on-chain guard contract. 
+
+By enforcing an atomic Anchor verification constraint:

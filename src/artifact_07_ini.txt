@@ -1,0 +1,8 @@
+SOLANA_RPC_URL=https://mainnet.helius-rpc.com/?api-key=YOUR_API_KEY
+PRIORITY_FEE_MICRO_LAMPORTS=50000
+JUPITER_API_URL=https://quote-api.jup.ag/v6
+PYTH_HERMES_URL=https://hermes.pyth.network
+ALERT_THRESHOLD_BPS=35
+DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+SLACK_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
+PORT=8080

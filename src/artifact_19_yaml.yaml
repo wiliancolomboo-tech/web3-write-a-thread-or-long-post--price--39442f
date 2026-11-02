@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  solana-pce-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: solana_price_sentinel
+    restart: always
+    environment:
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ALERT_RECIPIENT_EMAIL=security@enterprise-treasury.io
+    command: ["node", "dist/index.js", "compare", "--amount", "5000000000"]
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M

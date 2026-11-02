@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  price-comparator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sol-price-guard-daemon
+    restart: unless-stopped
+    env_file:
+      - .env
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep sol-price-guard-core || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s

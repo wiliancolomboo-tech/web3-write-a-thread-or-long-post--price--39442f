@@ -1,0 +1,25 @@
+# Why Price Comparison on Solana is an Entirely Different Beast
+
+Comparing prices across DEXs on Ethereum or L2s is trivial: read reserves once per block, evaluate static x*y=k formulas, and send your tx to the mempool with a competitive priority fee.
+
+On Solana, this mental model completely breaks.
+
+With 400ms block slots, continuous execution across Gulf Stream, and three radically divergent liquidity models living side-by-side, answering "Where is the best price for SOL/USDC right now?" requires high-performance systems engineering.
+
+Here is the architectural reality of Solana price comparison:
+
+### 1. Model Heterogeneity: AMM vs. CLMM vs. Central Limit Order Book (CLOB)
+- **Raydium v4 ($x \cdot y = k$)**: Simple, deterministic, constant slippage curve. Predictable, but capital inefficient. Price impact scales non-linearly with large order sizes.
+- **Orca Whirlpools (CLMM)**: Concentrated liquidity within tick arrays. Deep liquidity where traders congregate, but if an order punches through tick boundaries, slippage accelerates aggressively.
+- **Phoenix (On-Chain CLOB)**: Pure limit order book. No virtual curves; you are executing against actual resting institutional limit orders with zero passive slippage other than orderbook clearing.
+
+### 2. The Microsecond Oracle Divergence
+Push and pull oracles like Pyth publish updates with sub-second accuracy. However, during volatile cascades, AMM vaults lag or lead Pyth spot prices depending on Jito searcher latency and MEV bundle insertion. If your router does not mathematically check executable quotes against Pyth confidence intervals on-chain, your trade will get sandwiched.
+
+### 3. The SolPrice-Lens Solution
+We built `SolPrice-Lens`:
+1. **On-Chain Anchor Guard**: Verifies AMM pool vault reserve balances against live Pyth Oracle feeds within the atomic transaction envelope. If the divergence exceeds your target threshold, the transaction safely aborts.
+2. **Parallel Sub-Millisecond Off-Chain Evaluator**: Deserializes raw pool accounts concurrently, calculates exact tick/curve math, and computes net execution output after taker fees and priority tips.
+3. **Enterprise Monitoring**: Dispatches real-time alerts via Discord/Slack and Resend when venue spreads create risk-free statistical arbitrage or slippage traps.
+
+Solana demands real-time, deterministic price intelligence. Check out the open-source repository and deploy your own price comparison worker today.

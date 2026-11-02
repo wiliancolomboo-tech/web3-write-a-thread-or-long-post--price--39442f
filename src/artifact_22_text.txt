@@ -1,0 +1,8 @@
+6/8
+We’ve packaged SolPriceLens with:
+✅ Rust core engine for Concentrated Liquidity math
+✅ Yellowstone / Jupiter quote comparison pipeline
+✅ Real-time Slack & Discord enterprise alert webhooks
+✅ 1-click Docker Compose deploy
+
+GitHub repo: https://github.com/solana-eng/sol-price-lens

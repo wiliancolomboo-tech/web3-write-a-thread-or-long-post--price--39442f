@@ -1,32 +1,21 @@
 flowchart TD
-    subgraph Data Layer: Solana High-Speed State Ingestion
-        RPC[Yellowstone gRPC / Triton Geyser] -->|Sub-millisecond Account Streaming| WS[Account Update Streamer]
-        WS -->|TickArray / OrderBook / Pool Accounts| MEM[In-Memory Lock-Free State Cache]
-        PYTH[Pyth Network Hermes Feed] -->|Pull Oracles EMA Price| MEM
+    subgraph DataIngestion ["1. Real-Time Data Ingestion Layer"]
+        A1[Solana Validator Node / RPC] -->|WebSocket AccountSubscribe| B1[Orca Whirlpool Pool State]
+        A1 -->|WebSocket AccountSubscribe| B2[Raydium CLMM Pool State]
+        A2[Pyth Network Pull Service] -->|Hermes SSE Stream| B3[Pyth Real-Time Price Feeds]
+        A3[Jupiter V6 Routing API] -->|gRPC / HTTP/2 Quote Stream| B4[Jupiter Optimal Route]
     end
 
-    subgraph Core Pricing & Math Validation Engine
-        MEM --> COMP[SolPrism Multi-Venue Quoter]
-        COMP -->|Exact Math CLMM| M1[Orca SqrtPriceX64 Calc]
-        COMP -->|LOB Bids & Asks Tree| M2[Phoenix Engine v1 Calc]
-        COMP -->|TickArray Delta Math| M3[Raydium CLMM Calc]
-        
-        M1 --> AGG[Divergence & Best Execution Matrix]
-        M2 --> AGG
-        M3 --> AGG
+    subgraph NormalizationEngine ["2. Deterministic Comparison Engine"]
+        B1 & B2 & B3 & B4 --> C1[Tick / SqrtPrice Math Normalizer]
+        C1 --> C2[Priority Fee & CU Estimator]
+        C2 --> C3{Cross-Venue Price Evaluator}
+        C3 -->|Calculate Spread & Net Slippage| C4[Best Execution Matrix]
     end
 
-    subgraph Security, Verification & On-Chain Execution
-        AGG --> DEC{Price Discrepancy > Threshold?}
-        DEC -->|No: Standard Route| BPF[SolPrism On-Chain Verification Program]
-        DEC -->|Yes: Arbitrage Alert| SEC[Risk Mitigation & Circuit Breaker]
-        
-        BPF -->|Cross-Program Invocation| JUP[Execute Swaps / Atomic Arb]
-        SEC -->|Halt Route & Emit Warning| NOTIF
-    end
-
-    subgraph Enterprise Telemetry & Notification Loop
-        NOTIF[Enterprise Webhook Dispatcher]
-        NOTIF -->|JSON POST| DISCORD[Discord Operations Webhook]
-        NOTIF -->|Critical Alert Event| RESEND[Resend Enterprise Email Service]
+    subgraph DecisionExecution ["3. Action & Notification Pipeline"]
+        C4 -->|Spread >= Target Basis Points| D1[Arbitrage / Routing Engine]
+        C4 -->|Anomaly or Spread Violation| D2[Enterprise Webhook Dispatcher]
+        D1 -->|Jito Bundles| E1[Solana Mainnet-Beta Engine]
+        D2 -->|Structured Payload| E2[Slack / Discord / Resend Ops Channel]
     end

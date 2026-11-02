@@ -1,0 +1,14 @@
+Solana Liquidity Spectrum
+   ┌─────────────────────────────────────────────────────────────┐
+   │                                                             │
+   │  [Constant Product AMM]        [Concentrated Liquidity]     │
+   │     Raydium v4 (x*y=k)            Orca Whirlpools (CLMM)    │
+   │     • Static full-curve           • High capital efficiency │
+   │     • High slippage on size       • Tick-array crossings    │
+   │                                                             │
+   │  [Central Limit Orderbook]     [Decentralized Aggregators]  │
+   │     Phoenix / OpenBook v2         Jupiter v6 (Metis Engine) │
+   │     • Sub-millisecond matching    • Multi-hop routing       │
+   │     • Zero slippage inside spread • Graph traversal paths   │
+   │                                                             │
+   └─────────────────────────────────────────────────────────────┘

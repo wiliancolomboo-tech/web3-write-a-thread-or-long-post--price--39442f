@@ -1,0 +1,6 @@
+3/10 To solve this, we engineered & open-sourced the Solana Deterministic Price Sentinel:
+✅ Direct zero-copy RPC byte deserialization for AMMs
+✅ Pyth Pull Oracle confidence verification
+✅ Instant alerts via @Resend & Discord whenever spread dispersion exceeds 25 bps.
+
+Ready to deploy on mainnet: https://github.com/solana-defi-architect/solana-price-comparator

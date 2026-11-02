@@ -1,0 +1,7 @@
+client/
+├── package.json
+├── tsconfig.json
+└── src/
+    ├── math.ts
+    ├── webhook.ts
+    └── comparator_daemon.ts

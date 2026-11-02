@@ -1,0 +1,1 @@
+Confidence Interval Check: |P_exec - P_pyth| <= (Pyth_Confidence * Multiplier) + Max_Allowed_Spread_Bps

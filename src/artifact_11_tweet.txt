@@ -1,0 +1,6 @@
+3/3 🛠️ Turnkey & Open-Source:
+• Complete CPMM vs CLMM mathematical models
+• Real-time webhook alerting for cross-DEX price disparities
+• Full test suite + 1-click Docker/Prometheus stack
+
+Inspect the architecture & deploy the monitor here: https://github.com/sponsor/spectraquote-solana 🚀 @solana

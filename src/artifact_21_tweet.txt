@@ -1,0 +1,4 @@
+2/7 ⚡ The Findings:
+• For <$25k: Phoenix LOB wins cleanly. Zero-slippage fills against resting limit orders with ~28k CUs.
+• For >$100k: Orca Whirlpool & Raydium CLMM absorb tick impact better than orderbooks.
+• For >$500k: Jupiter splits dominate (saving up to 48 bps vs single-venue routing).

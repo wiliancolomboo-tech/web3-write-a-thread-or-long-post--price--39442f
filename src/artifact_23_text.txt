@@ -1,0 +1,2 @@
+7/8
+Whether you are a treasury desk executing 7-figure rebalances or an MEV searcher hunting tick mispricings: stop benchmarking nominal quotes. Benchmark NET REALIZED EXECUTION.

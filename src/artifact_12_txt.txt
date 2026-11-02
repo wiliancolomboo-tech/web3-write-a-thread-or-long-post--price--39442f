@@ -1,0 +1,8 @@
+Why does venue pricing diverge?
+
+1/ @Orca_so CLMM: Deep concentrated ticks. Ideal for trades <$25k, but traversing tick arrays costs additional CUs.
+2/ @PhoenixTrade: Pure CLOB matching in a single account. Zero tick crossing overhead, lowest gas footprint (~22k CUs).
+3/ In volatile slots, account write-lock contention creates phantom slippage before your swap lands.
+
+We built an open-source Anchor best-execution verifier to mathematically prove the optimal route every slot:
+github.com/solprice-verify/solana-price-comparison

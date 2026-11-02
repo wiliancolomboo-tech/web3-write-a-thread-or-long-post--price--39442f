@@ -1,0 +1,36 @@
+🧵 1/5
+Why does a $100k swap on @Solana execute with 35 bps less slippage on a concentrated liquidity pool vs. standard AMMs—and how do you verify you aren’t getting front-run by toxic MEV?
+
+Here is a deep-dive technical comparison of price discovery across @JupiterExchange, @Orca_so, and @PythNetwork 👇
+
+---
+
+🧵 2/5
+On-chain price isn't unified. 
+• @Orca_so Whirlpools use tick arrays: P(i) = 1.0001^i with hyper-concentrated L.
+• Phoenix uses a crankless on-chain LOB with pure step-wise FIFO fills.
+• @JupiterExchange dynamic routing computes graph-traversal splits to balance marginal price impact across both.
+
+---
+
+🧵 3/5
+Where does pricing fail? Microstructure latency.
+If an AMM pool's spot tick diverges from @PythNetwork's signed index by >50 bps, your transaction is executing into stale or toxic liquidity.
+Pyth median confidence bands (σ) give you the exact mathematical ground truth.
+
+---
+
+🧵 4/5
+To solve this for enterprise protocols, we engineered and open-sourced the **Solana Price Sentinel**:
+✅ Anchor on-chain circuit breaker program
+✅ Real-time multi-venue quoting daemon
+✅ Instant alert dispatches to Discord, Slack & @resend
+
+Repo & architecture breakdown: https://github.com/enterprise/solana-price-sentinel
+
+---
+
+🧵 5/5
+Whether you are building high-frequency arbitrage algorithms or protocol treasury managers, never assume a quote is optimal. Benchmark your DEX slippage deterministically on Solana!
+
+Tagging @Solana @JupiterExchange @Orca_so @PythNetwork #Solana #DeFi #Rust

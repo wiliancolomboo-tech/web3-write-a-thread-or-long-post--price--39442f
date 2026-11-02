@@ -1,0 +1,1 @@
+4/7 ⚡ 3. @ellipsis_labs Phoenix flips AMMs on their head with a 100% on-chain CLOB. No curves, no cranks—just direct top-of-book bid/ask matching inside packed binary memory slabs. Zero curve tax for taker fills.

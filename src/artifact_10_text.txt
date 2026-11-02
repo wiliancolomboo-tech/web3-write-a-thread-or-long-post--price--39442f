@@ -1,0 +1,5 @@
+1/ Most traders think the cheapest swap on Solana is just wherever the spot price looks lowest.
+
+They couldn't be more wrong. 🧵
+
+Between CLMM tick-skipping, Phoenix orderbook depth, and Pyth pull latency, here is the technical breakdown of how price actually works on @solana 👇

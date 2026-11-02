@@ -1,0 +1,37 @@
+🧵 Deep Dive: The Solana Price Comparison Architecture: Why AMM Quotes Lie and How to Measure "True Realized Execution" ⚡️
+
+Most Solana traders look at a swap quote and assume the venue with the lowest printed price is the cheapest. 
+
+In high-throughput, low-latency DeFi, that assumption is dead wrong. Here is how concentrated liquidity (Orca), central limit order books (Phoenix), and aggregators (Jupiter) actually stack up under institutional volume. 👇
+
+---
+
+1/ The Fallacy of the Spot Price
+On Ethereum, gas fees dwarf small execution slippage. On @solana, slot times are ~400ms. Liquidity shifts block-by-block. 
+
+Spot price ignores three crucial variables:
+- Dynamic Compute Priority Fees (Micro-lamports paid to validator priority queues)
+- CLOB vs CLMM Taker Fee Invariants
+- Instantaneous Pyth Confidence Discrepancies ($conf)
+
+If your execution engine doesn't calculate Net Effective Price ($P_{\text{eff}}$), you are bleeding capital.
+
+2/ Anatomy of the Venues:
+🔹 @PhoenixTrade: Pure on-chain CLOB. Deterministic match events. Zero LP curve slippage at tick depth. Lowest base taker overhead.
+🔹 @Orca_so Whirlpools: Concentrated liquidity. Outstanding capital efficiency for bounded ranges, but larger tick-crossings induce quadratic slippage degradation.
+🔹 @JupiterExchange: Dynamic graph routing across multi-hop splits. The gold standard for retail size, but multi-account write-locks increase compute unit consumption.
+
+3/ Introducing SPDR (Solana Price Dispersion & Route Comparison Engine) 🛡️
+We built an open-source, enterprise-grade daemon that:
+- Pulls multi-venue book states + Pyth benchmark prices in parallel
+- Evaluates net price realization including rent & dynamic CU prioritization
+- Broadcasts atomic webhook alerts (Discord/Resend) the moment cross-venue divergence breaches 25 bps.
+
+Run it turnkey with Docker in 60 seconds:
+`docker-compose up -d`
+
+Zero stubs. Complete production TypeScript implementation. Deterministic execution for institutional treasuries.
+
+Check out the repo and technical breakdown: https://github.com/enterprise/spdr-engine 🚀
+
+#Solana #DeFi #Rust #Anchor #CryptoTrading #Jupiter #Orca #Phoenix

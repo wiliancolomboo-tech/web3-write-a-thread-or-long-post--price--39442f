@@ -1,0 +1,11 @@
+/spdr-engine/
+├── Dockerfile
+├── docker-compose.yml
+├── package.json
+├── tsconfig.json
+├── .env.example
+├── src/
+│   ├── engine.ts
+│   └── cli.ts
+└── tests/
+    └── engine.spec.ts

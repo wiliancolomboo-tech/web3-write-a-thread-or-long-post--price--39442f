@@ -1,0 +1,36 @@
+# Stage 1: Build Rust Core Engine & TypeScript Services
+FROM node:20-slim AS builder
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    build-essential \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Rust toolchain
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Install dependencies and compile CLI
+WORKDIR /app/solcompare-cli
+COPY solcompare-cli/package*.json ./
+RUN npm ci
+
+COPY solcompare-cli/ ./
+RUN npm run build
+
+# Stage 2: Minimal Distroless Production Runtime
+FROM node:20-slim AS runner
+
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY --from=builder /app/solcompare-cli/package*.json ./
+COPY --from=builder /app/solcompare-cli/node_modules ./node_modules
+COPY --from=builder /app/solcompare-cli/dist ./dist
+
+USER node
+ENTRYPOINT ["node", "dist/index.js"]
+CMD ["compare", "--in", "WSOL", "--out", "USDC", "--amount", "10000000000"]

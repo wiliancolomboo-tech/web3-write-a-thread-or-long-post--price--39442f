@@ -1,0 +1,7 @@
+Gross Quoted Price
+   -   Price Impact (f(Liquidity Depth, Order Size))
+   -   Compute Unit Priority Cost (Micro-lamports / CU)
+   -   Base Network Fee (5,000 Lamports)
+   -   Jito Bundle MEV Protection Tip
+   =================================================
+   =   NET EFFECTIVE EXECUTION PRICE

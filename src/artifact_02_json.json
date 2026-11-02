@@ -1,0 +1,22 @@
+{
+  "name": "solana-price-comparison-engine",
+  "version": "1.0.0",
+  "description": "Production-Grade Solana Multi-DEX Price Comparison and Quote Verification Engine",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node src/index.ts",
+    "compare": "ts-node src/cli.ts",
+    "test": "ts-node src/test.ts"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.91.0",
+    "bn.js": "^5.2.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.1.5",
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  }
+}

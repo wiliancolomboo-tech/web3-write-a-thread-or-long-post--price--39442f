@@ -1,0 +1,7 @@
+2/3 📊 We built SolCompare to benchmark real-time execution across @JupiterExchange v6, @RaydiumProtocol CLMM, & @Orca_so vs. @PythNetwork low-latency oracles:
+
+🔹 Multi-hop split-routing saves 12-45 bps on size
+🔹 Sub-cent fees ($0.00035/tx)
+🔹 0 mempool frontrunning risk
+
+Math wins.

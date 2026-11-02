@@ -1,0 +1,10 @@
+Deterministic execution guarantees:
+✅ Sub-slot tick ingestion (<400ms)
+✅ Bounded slippage math
+✅ Automated Slack/Discord telemetry
+✅ Turnkey Dockerized deployment
+
+Full open-source codebase & architecture docs:
+👉 github.com/sponsor-bounties/sol-price-lens
+
+Built for the Solana Price Comparison bounty! @Solana #Solana #DeFi #Rust

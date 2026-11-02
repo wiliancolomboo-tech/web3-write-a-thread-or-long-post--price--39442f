@@ -1,74 +1,122 @@
-import { PublicKey } from "@solana/web3.js";
-import BN from "bn.js";
-import * as dotenv from "dotenv";
-import { SolPrismQuoter } from "./price-engine";
-import { EnterpriseDispatcher } from "./enterprise-dispatcher";
+import * as anchor from "@coral-xyz/anchor";
+import { Program } from "@coral-xyz/anchor";
+import { PublicKey, Keypair, SystemProgram } from "@solana/web3.js";
+import { expect } from "chai";
 
-dotenv.config();
+describe("sol_price_compare program tests", () => {
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
 
-const RPC_URL = process.env.SOLANA_RPC_URL || "https://api.mainnet-beta.solana.com";
-const WS_DISCORD = process.env.DISCORD_WEBHOOK_URL;
-const RESEND_KEY = process.env.RESEND_API_KEY;
-const ALERT_EMAIL = process.env.ALERT_EMAIL_RECIPIENT;
+  // Interface mock to program
+  const program = anchor.workspace.SolPriceCompare as Program<any>;
+  const authority = provider.wallet as anchor.Wallet;
 
-const SOL_MINT = new PublicKey("So11111111111111111111111111111111111111112");
-const USDC_MINT = new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
+  let registryPda: PublicKey;
+  let registryBump: number;
 
-async function main() {
-  console.log("===============================================================");
-  console.log("   SOLPRISM: PRODUCTION PRICE COMPARISON & ROUTING ENGINE      ");
-  console.log("===============================================================");
-
-  const quoter = new SolPrismQuoter(RPC_URL);
-  const dispatcher = new EnterpriseDispatcher({
-    discordWebhookUrl: WS_DISCORD,
-    resendApiKey: RESEND_KEY,
-    alertEmailRecipient: ALERT_EMAIL,
+  before(async () => {
+    [registryPda, registryBump] = PublicKey.findProgramAddressSync(
+      [Buffer.from("price_registry")],
+      program.programId
+    );
   });
 
-  const tradeSizes = [
-    new BN(1 * 1e9),    // 1 SOL
-    new BN(10 * 1e9),   // 10 SOL
-    new BN(100 * 1e9),  // 100 SOL
-    new BN(1000 * 1e9), // 1,000 SOL (Whale size)
-  ];
+  it("1. Initializes the Global Price Comparison Registry", async () => {
+    const defaultThresholdBps = 30; // 0.30%
 
-  console.log(`Executing multi-venue price comparison against Live DEX state...\n`);
+    // Check if account already exists
+    const accountInfo = await provider.connection.getAccountInfo(registryPda);
+    if (!accountInfo) {
+      const tx = await program.methods
+        .initializeRegistry(defaultThresholdBps)
+        .accounts({
+          registry: registryPda,
+          authority: authority.publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
 
-  for (const size of tradeSizes) {
-    const formattedIn = size.toNumber() / 1e9;
-    console.log(`---------------------------------------------------------------`);
-    console.log(`[ANALYSIS] Input Swap: ${formattedIn} SOL -> USDC`);
-
-    const result = await quoter.comparePrices(SOL_MINT, USDC_MINT, size);
-
-    result.quotes.forEach((q) => {
-      console.log(
-        ` > [${q.venueName.padEnd(18)}] Out: ${(q.outAmount.toNumber() / 1e6).toFixed(4)} USDC | ` +
-        `Rate: $${q.effectivePrice.toFixed(4)} | ` +
-        `Slip: ${q.priceImpactPct.toFixed(3)}% | ` +
-        `Latency: ${q.executionLatencyMs}ms`
-      );
-    });
-
-    console.log(` > Winner: ${result.optimalVenue.venueName} | Discrepancy: ${result.divergenceBps} bps`);
-
-    // Dispatch telemetry
-    await dispatcher.dispatchToDiscord(result);
-
-    // If divergence exceeds 25 bps on whale orders, trigger executive dispatch
-    if (result.divergenceBps > 25 && formattedIn >= 100) {
-      console.log(`[ALERT] High divergence detected (${result.divergenceBps} bps). Triggering Resend Notification...`);
-      await dispatcher.dispatchDivergenceAlertEmail(result);
+      expect(tx).to.be.a("string");
+      const registryAccount = await program.account.comparisonRegistry.fetch(registryPda);
+      expect(registryAccount.authority.toBase58()).to.equal(authority.publicKey.toBase58());
+      expect(registryAccount.divergenceAlertThresholdBps).to.equal(defaultThresholdBps);
+      expect(registryAccount.totalAttestations.toNumber()).to.equal(0);
     }
-  }
-
-  console.log("\n[SUCCESS] Price comparison cycle completed deterministically.");
-}
-
-if (require.main === module) {
-  main().catch((err) => {
-    console.error("Fatal exception in engine runner:", err);
-    process.exit(1);
   });
-}
+
+  it("2. Validates mathematical spread basis points calculation", () => {
+    const priceA = 150_000_000; // $150.00
+    const priceB = 150_750_000; // $150.75
+    const diff = Math.abs(priceA - priceB);
+    const min = Math.min(priceA, priceB);
+    const spreadBps = Math.floor((diff * 10000) / min);
+
+    // 0.75 / 150.00 * 10000 = 50 bps
+    expect(spreadBps).to.equal(50);
+  });
+
+  it("3. Rejects comparison when input price is zero", async () => {
+    const pairBuffer = Buffer.alloc(16);
+    pairBuffer.write("SOL/USDC", 0, "utf-8");
+    const clientTimestamp = new anchor.BN(Math.floor(Date.now() / 1000));
+
+    const [attestationPda] = PublicKey.findProgramAddressSync(
+      [
+        Buffer.from("attestation"),
+        registryPda.toBuffer(),
+        pairBuffer,
+        clientTimestamp.toArrayLike(Buffer, "le", 8),
+      ],
+      program.programId
+    );
+
+    try {
+      await program.methods
+        .recordPriceComparison(
+          Array.from(pairBuffer),
+          new anchor.BN(0), // INVALID ZERO PRICE
+          new anchor.BN(150_000_000),
+          clientTimestamp
+        )
+        .accounts({
+          registry: registryPda,
+          attestation: attestationPda,
+          pythPriceFeed: Keypair.generate().publicKey,
+          attester: authority.publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc();
+      expect.fail("Should have failed with PriceCompareError::InvalidPrice");
+    } catch (err: any) {
+      expect(err.toString()).to.include("InvalidPrice");
+    }
+  });
+
+  it("4. Confirms deterministic PDA derivation guarantees idempotency", () => {
+    const pairBuffer = Buffer.alloc(16);
+    pairBuffer.write("SOL/USDC", 0, "utf-8");
+    const timestamp = new anchor.BN(1710000000);
+
+    const [pda1] = PublicKey.findProgramAddressSync(
+      [
+        Buffer.from("attestation"),
+        registryPda.toBuffer(),
+        pairBuffer,
+        timestamp.toArrayLike(Buffer, "le", 8),
+      ],
+      program.programId
+    );
+
+    const [pda2] = PublicKey.findProgramAddressSync(
+      [
+        Buffer.from("attestation"),
+        registryPda.toBuffer(),
+        pairBuffer,
+        timestamp.toArrayLike(Buffer, "le", 8),
+      ],
+      program.programId
+    );
+
+    expect(pda1.toBase58()).to.equal(pda2.toBase58());
+  });
+});

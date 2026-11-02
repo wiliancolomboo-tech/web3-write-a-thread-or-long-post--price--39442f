@@ -1,0 +1,46 @@
+flowchart TD
+    subgraph Liquidity Venues & Oracles
+        A1[Orca Whirlpools CLMM]
+        A2[Raydium CPMM / CLMM]
+        A3[Phoenix Orderbook]
+        A4[Pyth Network Pull Feeds]
+    end
+
+    subgraph Aegis Engine Daemon [Off-Chain Rust/TS Engine]
+        B1[Venue Quote Ingestion Worker]
+        B2[Price Discrepancy & Depth Normalizer]
+        B3[Net Effective Execution Calculator]
+        B4[Risk & Confidence Engine]
+        B5[Jito MEV Bundle Packager]
+    end
+
+    subgraph Solana Runtime [On-Chain SVM Engine]
+        C1[Anchor Program: price_comparator_guard]
+        C2[Pyth Solana Receiver Verification]
+        C3[Atomic Swap Instruction]
+        C4[Post-Execution Invariant Assertion]
+    end
+
+    subgraph Institutional Alerting & Observability
+        D1[Resend Enterprise Email Service]
+        D2[Slack / Discord Webhooks]
+        D3[Prometheus & Grafana Telemetry]
+    end
+
+    A1 -->|Tick Array State| B1
+    A2 -->|Pool Reserve State| B1
+    A3 -->|L2 Depth Snapshot| B1
+    A4 -->|Price Feed Message| B1
+
+    B1 --> B2
+    B2 --> B3
+    B3 --> B4
+    B4 -->|Threshold Trigger / Alert| D2
+    B4 -->|Institutional Volatility Breach| D1
+    B3 --> B5
+
+    B5 -->|Atomic Multi-Ix Tx Bundle| C1
+    C1 -->|Validate Herme / Feed Account| C2
+    C2 -->|Assert Price Deviation <= Max Bps| C3
+    C3 -->|Execute Swap on Best Venue| C4
+    C4 -->|Return Slippage & Metric Data| D3

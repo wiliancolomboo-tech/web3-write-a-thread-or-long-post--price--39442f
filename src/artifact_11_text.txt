@@ -1,0 +1,5 @@
+1/6 ⚡ Think you're getting the best price swapping on Solana? Think again.
+
+We benchmarked 10,000 swap executions across @JupiterExchange, @RaydiumProtocol, @Orca_so, and @PythNetwork to audit real-world slippage, routing efficiency, and price divergence.
+
+Here is the ultimate Solana Price Comparison breakdown 👇🧵

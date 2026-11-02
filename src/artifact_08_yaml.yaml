@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  price-comparison-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
+      - PYTH_SOL_USD_PUBKEY=H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG
+      - ALERT_THRESHOLD_BPS=30
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    ports:
+      - "8080:8080"

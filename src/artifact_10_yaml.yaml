@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  price-compare-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sol_price_compare_daemon
+    restart: unless-stopped
+    environment:
+      - SOLANA_RPC_URL=https://api.devnet.solana.com
+      - WALLET_KEYPAIR_PATH=/secrets/id.json
+      - PROGRAM_ID=PriceComp111111111111111111111111111111111
+      - PYTH_FEED_SOL_USD=H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG
+      - ALERT_THRESHOLD_BPS=25
+      - POLL_INTERVAL_MS=2000
+      - METRICS_PORT=9090
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL}
+      - RESEND_API_KEY=${RESEND_API_KEY}
+      - ALERT_EMAIL_RECIPIENT=${ALERT_EMAIL_RECIPIENT}
+    volumes:
+      - ./keypair.json:/secrets/id.json:ro
+    ports:
+      - "9090:9090"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"

@@ -1,0 +1,6 @@
+3/7 🎯 2. @orca_so Whirlpools use Concentrated Liquidity. Price lives on-chain as a Q64.64 fixed-point integer: sqrtPriceX64.
+
+To derive real price:
+P = (sqrtPriceX64 / 2^64)^2 * 10^(decimalsTokenA - decimalsTokenB)
+
+Ultra-tight spreads, but requires traversing tick arrays on large orders.

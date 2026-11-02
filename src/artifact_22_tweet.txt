@@ -1,0 +1,5 @@
+3/7 🚨 BUT WATCH THE COMPUTE UNITS:
+A 3-hop Jupiter split costs ~200k CUs vs 28k on Phoenix. 
+During peak congestion, the priority fee on small trades can completely wipe out the slippage savings!
+
+Explore our open-source On-Chain Price Verification Engine & Benchmark Suite here: github.com/solana-price-comparison #Solana #DeFi

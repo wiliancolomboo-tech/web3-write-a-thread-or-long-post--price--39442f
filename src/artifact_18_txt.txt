@@ -1,0 +1,6 @@
+Traditional EVM                  Solana Sealevel + Gulf Stream
+┌───────────────────────┐         ┌────────────────────────────────┐
+│ Mempool Pending Txns  │         │ Direct Leader Scheduling       │
+│ Block Auction (12s)   │         │ 400ms Sub-Slots / Streamed Tx  │
+│ High Gas Bidding Wars │         │ Localized Priority Fee Markets │
+└───────────────────────┘         └────────────────────────────────┘

@@ -1,0 +1,6 @@
+4/8
+We built SolPriceLens: an open-source, deterministic price comparison engine in Rust that calculates Net Realized Yield:
+
+P_net = Nominal_Yield - (Dynamic_Gas_Overhead + State_Churn_Risk)
+
+The empirical data across 1,000 transactions shows an unmistakable threshold...

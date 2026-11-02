@@ -1,0 +1,26 @@
+🧵 1/4
+Why do most Solana "price comparison" bots leave thousands of dollars of MEV on the table?
+
+Comparing spot rates across @RaydiumProtocol, @Orca_so, @PhoenixTrade & @MeteoraAG isn't just about quoting $y/x$. 
+
+At 400ms slot times, execution is an active microstructure game. 👇
+
+🧵 2/4
+Here is the secret:
+Raydium & Orca rely on Tick Array walking. Phoenix operates pure atomic L3 orderbooks. Meteora uses dynamic bin fees.
+
+If your comparison router doesn't simulate virtual tick liquidity depth in real time, your "cheapest swap" suffers massive slippage on fill.
+
+🧵 3/4
+We engineered the Solana Enterprise Price Comparator (SEPC):
+⚡ Parallelized sub-slot quoting across CLMM + Orderbooks
+🔮 Deterministic on-chain validation via @PythNetwork Oracles
+🛡️ Enforces max basis-point divergence ceilings to eliminate toxic fills
+
+🧵 4/4
+Open-source, non-custodial, and production-ready with turnkey Docker containers and automated Discord/Slack treasury alerting.
+
+Check out the full GitHub repository and on-chain verification engine here:
+👉 [https://github.com/enterprise-solana/price-comparison-core]
+
+#Solana #DeFi #Rust #Anchor #CryptoTrading
