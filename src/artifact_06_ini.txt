@@ -2,6 +2,6 @@ SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
 SOLANA_KEYPAIR_PATH=/etc/solpriceguard/keys/deployer.json
 MAX_DIVERGENCE_BPS=75
 SLACK_OR_DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
-RESEND_API_KEY=re_live_9876543210FEDCBA
+RESEND_API_KEY=re_test_000000000000000000000000
 ESCALATION_EMAIL=security-desk@solpriceguard.io
 PORT=8080

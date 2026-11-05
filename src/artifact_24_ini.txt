@@ -1,5 +1,5 @@
 SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
 DISCORD_WEBHOOK_URL=https://api.example.com/webhooks/alerts/placeholder
-RESEND_API_KEY=re_example_1234567890
+RESEND_API_KEY=re_test_000000000000000000000000
 AUDIT_EMAIL=treasury@solana-enterprise.io
 ANCHOR_WALLET=~/.config/solana/id.json
